@@ -4,8 +4,10 @@ import java.net.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.*;
-
-class check extends Thread 
+ArrayList<ArrayList<Socket>> socket_save=new ArrayList<ArrayList<Socket>>;
+ArrayList<ArrayList<Socket>> tmp :socket_save
+socket_save.size.size();
+class check extends Thread  //check server exit 
 {
     public void run()
     {
@@ -18,18 +20,49 @@ class check extends Thread
     }
 }
 
-class talk extends Thread{
-    Socket socket=null;
+class broadcast extends Thread //receive msg then broadcast for everyone in same room
+{
+	String msg;
+	
+	int[] count_socket_room=new int[10]{0};
+	void save_socket(int roomnum,Socket socket)
+	{
+		count_socket_room[roomnum]++;
+	}
+	void broadmsg(int socket_num,String msg)// broadcast for everyone in room
+	{
+		
+	}
+	void run()
+	{
+		try
+		{
+			
+		}
+		catch()
+		{
+			
+		}
+	}
+}
+
+class talk extends Thread{ 
+    Socket socket;
     String IP;
-    int count;
-    int acc;
+	
+    int count;//how many people in room
+    String acc_name;
+	
     int roomnumber=0;
-    int flag=0;
+	
+    int flag=0; // receive room number flag
+	
     int roomnum()
     {
     	return roomnumber;
     }
-    talk(Socket socket,int count,int acc)
+	
+    talk(Socket socket,int count)
     {
     	this.acc=acc;
         this.socket=socket;
@@ -38,7 +71,7 @@ class talk extends Thread{
     public void run()
     {
 	        try{
-	        	Scanner in= new Scanner(socket.getInputStream(),"UTF-8");
+	        	Scanner in= new Scanner(socket.getInputStream());
 	        	while(in.hasNext())
 	        	{
 	        		IP="IP:"+socket.getInetAddress();
